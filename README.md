@@ -1,5 +1,5 @@
 # Debian-script
-Debian  customization from rootbeet1.
+Debian  customization from rootbeet1!
 The script automates essential system updates, software installations, and configurations, aimed at tailoring the Debian environment to personal preferences.
 
 # To install
