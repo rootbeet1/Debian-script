@@ -4,7 +4,7 @@ The script automates essential system updates, software installations, and confi
 
 # To install
     git clone https://github.com/rootbeet1/Debian-script
-    cd debian-titus
+    cd Debian-script
     sudo bash script.sh
 
 # Features:
