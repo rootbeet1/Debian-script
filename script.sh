@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 
-#Post-Installation Skript for Debian/unstable/stable---------------------------------------------------------------------------------------
+#Post-Installation Skript for Debian(bookworm)/stable/testing------------------------------------------------------------------------------------
 # ASCII Beginning--------------------------------------------------------------------------------------------------------------------------------
 echo -e 
 cat << "EOF"
@@ -35,7 +35,7 @@ nala update
 while true; do
     read -p "Do you want Debian testing (not recommended for beginners)?" yn
     case $yn in
-        [Yy]* ) cp ./sources2.list /etc/apt/sources.list; break;;
+        [Yy]* ) cp ./sources2.list /etc/apt/sources.list;break;;
         [Nn]* ) cp ./sources.list /etc/apt/; break;;
         * ) echo "Please answer yes or no.";;
     esac
@@ -90,16 +90,50 @@ echo -e
 #Clean-------------------------------------------------------------------------------------------------------------------------------------
 nala remove fonts-noto-extra gnome-contacts yelp -y
 
+#Option of deleting gnome-software---------------------------------------------------------------------------------------------------------
 while true; do
-    read -p "Do you wish to remove the graphical Softwaremanager (better Perfomance without gnome-software, not recommended for beginners)(Y/n)?" yn
+    read -p "Do you wish to remove the graphical Software Manager (better performance without gnome-software, not recommended for beginners)? (yes/no): " yn
     case $yn in
-        [Yy]* ) nala remove gnome-software* -y; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
+        [Yy]* )
+            nala remove gnome-software* -y
+            echo "GNOME Software Manager has been removed."
+            break
+            ;;
+        [Nn]* )
+            break
+            ;;
+        * )
+            echo "Please answer yes or no."
+            ;;
     esac
 done
+
 nala clean
 nala autoremove -y
+
+
+#Option of installing Flatpak--------------------------------------------------------------------------------------------------------------
+while true; do
+    read -p "Do you want to install Flatpak (recommended for beginners)? (yes/no): " yn
+    case $yn in
+        [Yy]* )
+            nala update
+            nala install flatpak
+            nala install gnome-software-plugin-flatpak
+            flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+            echo "Flatpak installed successfully. Flathub repository added."
+            break
+            ;;
+        [Nn]* )
+            sudo cp ./sources.list /etc/apt/
+            echo "APT sources list updated."
+            break
+            ;;
+        * )
+            echo "Please answer yes or no."
+            ;;
+    esac
+done
 
 #ASCII-ENDING------------------------------------------------------------------------------------------------------------------------------
 echo "---------------------------------------------------------------------------------------------------------------------------------"
