@@ -52,9 +52,30 @@ nala update
 
 
 #installing essential programms------------------------------------------------------------------------------------------------------------
-nala install gparted kitty curl net-tools cpu-x wget git nextcloud-desktop bleachbit htop gnome-console libreoffice-gtk3 vlc lm-sensors firefox-esr pdfarranger gnome-shell-extension-dashtodock gnome-shell-extension-appindicator gnome-tweaks gnome-power-manager texmaker xournalpp keepassxc plymouth-themes papirus-icon-theme torbrowser-launcher baobab nmap torbrowser-launcher onionshare ufw cherrytree gnome-console -y
+#system utilities:
+nala install gparted kitty net-tools curl wget cpu-x git htop gnome-console lm-sensors plymouth-themes ufw nmap -y
+nala update
 
+#Productivity & Office Suites:
+nala install gimp libreoffice-gtk3 texmaker xournalpp keepassxc pdfarranger cherrytree baobab nextcloud-desktop bleachbit -y
+nala update
 
+#Multimedia:
+nala install vlc onionshare -y
+nala update
+
+#Theming:
+nala papirus-icon-theme gnome-shell-extension-dashtodock gnome-shell-extension-appindicator gnome-tweaks gnome-power-manager -y
+nala update
+
+#Browsers:
+nala install firefox-esr torbrowser-launcher -y
+nala update
+
+#programming-utilities:
+nala install python3 python3-pip -y
+
+      
 #installing LibreWolf----------------------------------------------------------------------------------------------------------------------
 nala update && nala install -y wget gnupg lsb-release apt-transport-https ca-certificates
 
