@@ -125,8 +125,6 @@ while true; do
             break
             ;;
         [Nn]* )
-            sudo cp ./sources.list /etc/apt/
-            echo "APT sources list updated."
             break
             ;;
         * )
