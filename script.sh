@@ -155,37 +155,9 @@ nala clean
 nala autoremove -y
 
 
-#Option of installing Flatpak--------------------------------------------------------------------------------------------------------------
-while true; do
-    read -p "Do you want to install Flatpak (recommended for beginners)? (yes/no): " yn
-    case $yn in
-        [Yy]* )
-            nala update
-            nala install flatpak
-            nala install gnome-software-plugin-flatpak
-            flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-            echo "Flatpak installed successfully. Flathub repository added."
-            break
-            ;;
-        [Nn]* )
-            break
-            ;;
-        * )
-            echo "Please answer yes or no."
-            ;;
-    esac
-done
-
 #ASCII-ENDING------------------------------------------------------------------------------------------------------------------------------
-echo "---------------------------------------------------------------------------------------------------------------------------------"
-echo -e 
-echo -e 
-echo "WELCOME HOME, FINALLY LINUX!!!!!!!!!!!!!!!!!!"
-echo -e 
-echo -e 
-echo "------------------------------------------------------------------------------------------------------------------------------------"
+echo "Installation finished!!!"
 sleep 1
-echo -e
 
 exit 0
 
