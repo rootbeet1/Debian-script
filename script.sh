@@ -74,10 +74,11 @@ nala update
 
 #programming-utilities:
 nala install python3 python3-pip -y
+nala update
 
       
 #installing LibreWolf----------------------------------------------------------------------------------------------------------------------
-nala update && nala install -y wget gnupg lsb-release apt-transport-https ca-certificates
+nala update && nala install wget gnupg lsb-release apt-transport-https ca-certificates -y
 
 distro=$(if echo " una bookworm vanessa focal jammy bullseye vera uma " | grep -q " $(lsb_release -sc) "; then echo $(lsb_release -sc); else echo focal; fi)
 
