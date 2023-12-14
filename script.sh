@@ -90,6 +90,27 @@ echo -e
 #Clean-------------------------------------------------------------------------------------------------------------------------------------
 nala remove fonts-noto-extra gnome-contacts yelp -y
 
+#Option of installing Flatpak--------------------------------------------------------------------------------------------------------------
+while true; do
+    read -p "Do you want to install Flatpak (recommended for beginners)? (yes/no): " yn
+    case $yn in
+        [Yy]* )
+            nala update
+            nala install flatpak
+            nala install gnome-software-plugin-flatpak
+            flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+            echo "Flatpak installed successfully. Flathub repository added."
+            break
+            ;;
+        [Nn]* )
+            break
+            ;;
+        * )
+            echo "Please answer yes or no."
+            ;;
+    esac
+done
+
 #Option of deleting gnome-software---------------------------------------------------------------------------------------------------------
 while true; do
     read -p "Do you wish to remove the graphical Software Manager (better performance without gnome-software, not recommended for beginners)? (yes/no): " yn
