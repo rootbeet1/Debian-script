@@ -33,11 +33,21 @@ nala update
 
 #Add-repo-----------------------------------------------------------------------------------------------------------------------------------
 while true; do
-    read -p "Do you want Debian testing (not recommended for beginners)?" yn
+    read -p "Do you want Debian testing (not recommended for beginners)? (y/n)" yn
     case $yn in
-        [Yy]* ) cp ./sources2.list /etc/apt/sources.list;break;;
-        [Nn]* ) cp ./sources.list /etc/apt/; break;;
-        * ) echo "Please answer yes or no.";;
+        [Yy]* ) 
+        echo "Debian testing"
+        cp ./sources2.list /etc/apt/sources.list
+        break
+        ;;
+        [Nn]* )
+        echo "Debian stable" 
+        cp ./sources.list /etc/apt/
+        break
+        ;;
+        * ) 
+        echo "Please answer yes or no."
+        ;;
     esac
 done
 
@@ -114,7 +124,7 @@ nala remove fonts-noto-extra gnome-contacts yelp -y
 
 #Option of installing Flatpak--------------------------------------------------------------------------------------------------------------
 while true; do
-    read -p "Do you want to install Flatpak (recommended for beginners)? (yes/no): " yn
+    read -p "Do you want to install Flatpak (recommended for beginners)? (y/n): " yn
     case $yn in
         [Yy]* )
             nala update
@@ -125,6 +135,7 @@ while true; do
             break
             ;;
         [Nn]* )
+            echo "Flatpak won't be installed"
             break
             ;;
         * )
@@ -135,7 +146,7 @@ done
 
 #Option of deleting gnome-software---------------------------------------------------------------------------------------------------------
 while true; do
-    read -p "Do you wish to remove the graphical Software Manager (better performance without gnome-software, not recommended for beginners)? (yes/no): " yn
+    read -p "Do you wish to remove the graphical Software Manager (not recommended for beginners)? (y/n): " yn
     case $yn in
         [Yy]* )
             nala remove gnome-software* -y
@@ -143,6 +154,7 @@ while true; do
             break
             ;;
         [Nn]* )
+            echo "grpahical Software manager won't be removed"
             break
             ;;
         * )
