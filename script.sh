@@ -26,8 +26,7 @@ apt-get upgrade -y
 
 
 # Install nala-----------------------------------------------------------------------------------------------------------------------------
-apt-get install nala -y
-nala fetch 
+apt-get install nala -y 
 nala update
 
 
@@ -53,58 +52,160 @@ done
 
 nala upgrade -y
 
-#installing desktop enviroment-------------------------------------------------------------------------------------------------------------
-nala install gnome-core qgnomeplatform-qt5 -y
-
-
 #update------------------------------------------------------------------------------------------------------------------------------------
 nala update
 
+while true; do
+    read -p "Which desktop enviroment do you want (k => kde plasma) or (g => gnome)? (k/g)" kg
+    case $kg in
+        [Kk]* ) 
+        echo "kde will be installed..."
+        
+        #installing desktop enviroment
+        nala install plasma-desktop sddm -y
+        
+        #installing essential programms:
+        #system utilities:
+        nala install gparted gnome-disk-utility net-tools curl wget cpu-x git htop konsole lm-sensors ufw nmap kde-spectacle ark dolphin -y
+        nala update
+        
+        #Browsers:
+        nala install firefox-esr torbrowser-launcher -y
+        nala update
 
-#installing essential programms------------------------------------------------------------------------------------------------------------
-#system utilities:
-nala install gparted kitty net-tools curl wget cpu-x git htop gnome-console lm-sensors plymouth-themes ufw nmap -y
-nala update
+        #Multimedia:
+        nala install vlc okular -y
+        nala update
 
-#Productivity & Office Suites:
-nala install gimp libreoffice-gtk3 texmaker xournalpp keepassxc pdfarranger cherrytree baobab nextcloud-desktop bleachbit -y
-nala update
+        #Productivity & Office Suites:
+        nala install gimp libreoffice-gtk3 libreoffice texmaker xournalpp keepassxc pdfarranger nextcloud-desktop kate -y
+        nala update
+        
+        #programming-utilities:
+        nala install python3 python3-pip -y
+        nala update
+        
+        #Option of installing Flatpak:
+        while true; do
+            read -p "Do you want to install Flatpak (recommended for beginners)? (y/n): " yn
+            case $yn in
+                [Yy]* )
+                    nala update
+                    nala install flatpak
+                    nala install plasma-discover-plugin-flatpak
+                    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+                    echo "Flatpak installed successfully. Flathub repository added."
+                    break
+                    ;;
+                [Nn]* )
+                    echo "Flatpak won't be installed"
+                    break
+                    ;;
+                * )
+                    echo "Please answer yes or no."
+                    ;;
+            esac
+        done
 
-#Multimedia:
-nala install vlc onionshare -y
-nala update
+        #Clean
+        nala remove palsma-discover packagekit -y
+        nala clean
+        nala autoremove -y
 
-#Theming:
-nala papirus-icon-theme gnome-shell-extension-dashtodock gnome-shell-extension-appindicator gnome-tweaks gnome-power-manager -y
-nala update
+        break
+        ;;
+        [Gg]* )
+        echo "gnome will be installed..." 
+        
+        #installing desktop enviroment
+        nala install gnome-core qgnomeplatform-qt5 -y
 
-#Browsers:
-nala install firefox-esr torbrowser-launcher -y
-nala update
+        #installing essential programms:
+        ##system utilities:
+        nala install gparted net-tools curl wget cpu-x git htop gnome-console lm-sensors plymouth-themes ufw nmap -y
+        nala update
 
-#programming-utilities:
-nala install python3 python3-pip -y
-nala update
+        #Browsers:
+        nala install firefox-esr torbrowser-launcher -y
+        nala update
+        
+        #Multimedia:
+        nala install vlc -y
+        nala update
 
+        #Productivity & Office Suites:
+        nala install gimp libreoffice libreoffice-gtk3 texmaker xournalpp keepassxc pdfarranger nextcloud-desktop bleachbit -y
+        nala update
+
+        #Theming:
+        nala papirus-icon-theme gnome-shell-extension-dashtodock gnome-shell-extension-appindicator gnome-tweaks gnome-power-manager -y
+        nala update
+        
+        #programming-utilities:
+        nala install python3 python3-pip -y
+        nala update
+        
+        #Option of installing Flatpak:
+        while true; do
+            read -p "Do you want to install Flatpak (recommended for beginners)? (y/n): " yn
+            case $yn in
+                [Yy]* )
+                    nala update
+                    nala install flatpak
+                    nala install gnome-software-plugin-flatpak
+                    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+                    echo "Flatpak installed successfully. Flathub repository added."
+                    break
+                    ;;
+                [Nn]* )
+                    echo "Flatpak won't be installed"
+                    break
+                    ;;
+                * )
+                    echo "Please answer yes or no."
+                    ;;
+            esac
+        done
+        
+        #Clean
+        nala remove fonts-noto-extra gnome-contacts yelp -y
+
+        #Option of deleting gnome-software---------------------------------------------------------------------------------------------------------
+        while true; do
+            read -p "Do you wish to remove the graphical Software Manager (not recommended for beginners)? (y/n): " yn
+            case $yn in
+                [Yy]* )
+                    nala remove gnome-software* -y
+                    echo "GNOME Software Manager has been removed."
+                    break
+                    ;;
+                [Nn]* )
+                    echo "grpahical Software manager won't be removed"
+                    break
+                    ;;
+                * )
+                    echo "Please answer yes or no."
+                    ;;
+            esac
+        done
+
+        nala clean
+        nala autoremove -y
+
+        break
+        ;;
+        * ) 
+        echo "Please answer k (for kde) or g (for gnome)."
+        ;;
+    esac
+done
       
 #installing LibreWolf----------------------------------------------------------------------------------------------------------------------
-nala update && nala install wget gnupg lsb-release apt-transport-https ca-certificates -y
+nala update && nala install extrepo -y
 
-distro=$(if echo " una bookworm vanessa focal jammy bullseye vera uma " | grep -q " $(lsb_release -sc) "; then echo $(lsb_release -sc); else echo focal; fi)
+extrepo enable librewolf
 
-wget -O- https://deb.librewolf.net/keyring.gpg | gpg --dearmor -o /usr/share/keyrings/librewolf.gpg
- tee /etc/apt/sources.list.d/librewolf.sources << EOF > /dev/null
-Types: deb
-URIs: https://deb.librewolf.net
-Suites: $distro
-Components: main
-Architectures: amd64
-Signed-By: /usr/share/keyrings/librewolf.gpg
-EOF
-
-nala update
-
-nala install librewolf -y
+nala update && nala install librewolf -y
 
 
 #installing VSCodium-----------------------------------------------------------------------------------------------------------------------
@@ -117,55 +218,6 @@ echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https:/
     
 nala update &&  nala install codium -y
 echo -e
-
-
-#Clean-------------------------------------------------------------------------------------------------------------------------------------
-nala remove fonts-noto-extra gnome-contacts yelp -y
-
-#Option of installing Flatpak--------------------------------------------------------------------------------------------------------------
-while true; do
-    read -p "Do you want to install Flatpak (recommended for beginners)? (y/n): " yn
-    case $yn in
-        [Yy]* )
-            nala update
-            nala install flatpak
-            nala install gnome-software-plugin-flatpak
-            flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-            echo "Flatpak installed successfully. Flathub repository added."
-            break
-            ;;
-        [Nn]* )
-            echo "Flatpak won't be installed"
-            break
-            ;;
-        * )
-            echo "Please answer yes or no."
-            ;;
-    esac
-done
-
-#Option of deleting gnome-software---------------------------------------------------------------------------------------------------------
-while true; do
-    read -p "Do you wish to remove the graphical Software Manager (not recommended for beginners)? (y/n): " yn
-    case $yn in
-        [Yy]* )
-            nala remove gnome-software* -y
-            echo "GNOME Software Manager has been removed."
-            break
-            ;;
-        [Nn]* )
-            echo "grpahical Software manager won't be removed"
-            break
-            ;;
-        * )
-            echo "Please answer yes or no."
-            ;;
-    esac
-done
-
-nala clean
-nala autoremove -y
-
 
 #ASCII-ENDING------------------------------------------------------------------------------------------------------------------------------
 echo "Installation finished!!!"
