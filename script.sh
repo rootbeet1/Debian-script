@@ -81,6 +81,10 @@ while true; do
         nala install gimp libreoffice-gtk3 libreoffice texmaker xournalpp keepassxc pdfarranger nextcloud-desktop kate -y
         nala update
         
+        #Theming 
+        mkdir -p ~/Theming
+        git clone https://github.com/jacksaur/Gorgeous-GRUB ~/Theming
+
         #programming-utilities:
         nala install python3 python3-pip -y
         nala update
@@ -140,6 +144,9 @@ while true; do
         #Theming:
         nala papirus-icon-theme gnome-shell-extension-dashtodock gnome-shell-extension-appindicator gnome-tweaks gnome-power-manager -y
         nala update
+        
+        mkdir -p ~/Theming
+        git clone https://github.com/jacksaur/Gorgeous-GRUB ~/Theming
         
         #programming-utilities:
         nala install python3 python3-pip -y
