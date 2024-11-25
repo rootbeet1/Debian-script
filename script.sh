@@ -112,7 +112,7 @@ while true; do
         done
 
         #Clean
-        nala remove palsma-discover packagekit -y
+        nala remove plasma-discover packagekit -y
         nala clean
         nala autoremove -y
 
