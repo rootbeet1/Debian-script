@@ -9,6 +9,10 @@ The script automates essential system updates, software installations, and confi
    - In the software selection screen, only choose **"System Utilities"** to keep the installation minimal and avoid unnecessary pre-installed software.
 
 2. **Download and run the script**:
+   - Install git:
+     ```bash
+     sudo apt install git
+     ```
    - Clone this repository:
      ```bash
      git clone https://github.com/rootbeet1/Debian-script
